@@ -26,7 +26,7 @@ By applying a **5-point multi-node volumetric pseudo-geometry deformation engine
 
 ## 🔬 Background & Resolving Angle-Bias in Object Detection
 
-In deep learning object detection models (such as YOLOv8, YOLOv9, YOLOv10, YOLOv11), datasets collected from real-world sensors (ROVs, satellites, single-view cameras) often suffer from **severe angle bias** due to an overrepresentation of frontal-view photographs. This causes a dramatic drop in detection accuracy when objects appear at tilted or side-profile angles.
+In deep learning object detection models (such as YOLOv8, YOLOv9, YOLOv10, YOLOv11, YOLO26), datasets collected from real-world sensors (ROVs, satellites, single-view cameras) often suffer from **severe angle bias** due to an overrepresentation of frontal-view photographs. This causes a dramatic drop in detection accuracy when objects appear at tilted or side-profile angles.
 
 Rather than requiring costly physical multi-view re-shooting, **Pseudo-3D Image Augmentation App** augments single-angle photographs into thousands of synthetic multi-view training samples, significantly boosting AI model generalization performance across all viewing perspectives.
 
@@ -100,10 +100,16 @@ The application is completely standalone and runs directly in modern web browser
 ### Directory Structure
 ```text
 Github/
-├── pseudo_3d_image_augmentation_app.html  # Main Application (Standalone HTML)
+├── index.html                             # Default Entry (GitHub Pages Root)
+├── index_en.html                          # English Web Application (Live)
+├── index_ja.html                          # Japanese Web Application (Live)
+├── pseudo_3d_image_augmentation_app_en.html # English Standalone HTML
+├── pseudo_3d_image_augmentation_app_ja.html # Japanese Standalone HTML
 ├── build_3d_tool.py                       # Automated Python Build Script
-├── README.md                              # English Documentation
-└── README_JA.md                           # Japanese Documentation
+├── README.md                              # Main Documentation
+├── README_EN.md                           # English Documentation
+├── README_JA.md                           # Japanese Documentation
+└── Screenshot.png                         # UI Screenshot
 ```
 
 ### Python Re-Build Engine (`build_3d_tool.py`)
@@ -118,7 +124,7 @@ python build_3d_tool.py
 
 ## 🚀 Quick Start Guide
 
-1. **Launch App**: Open `pseudo_3d_image_augmentation_app.html` in any web browser.
+1. **Launch App**: Open [`index_en.html`](https://keinagaokaeng.github.io/Pseudo-3D-Image-Augmentation-App/index_en.html) (or [`index_ja.html`](https://keinagaokaeng.github.io/Pseudo-3D-Image-Augmentation-App/index_ja.html)) directly in your web browser.
 2. **Set Class & Input Image**: Enter your `Class ID` and `Class Name` in the sidebar, then drop your image into the drop zone.
 3. **Deform & Augment**: Adjust 3D volumetric depth sliders and run automated batch captures (`[Y]`, `[P]`, `[R]`).
 4. **Export Dataset**: Click **`📦 Export Dataset (ZIP)`** to download your complete YOLO dataset containing `/images/`, `/labels/`, and `data.yaml`.

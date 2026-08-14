@@ -19,15 +19,15 @@
 
 ## 📌 概要 (Overview)
 
-**Pseudo-3D Image Augmentation App** は、あらゆる対象物（生物、工業製品、自動車、電子部品、動物、人物、各種オブジェクト等）の単一 2D 写真から、**3D 立体空間における被写体の擬似幾何変形（Pseudo-3D Deformation）・3 軸全方向回転（Yaw / Pitch / Roll）を再現し、多アングルの教示データセットを全自動生成するための完全汎用アノテーション＆データ拡張アプリ**です。
+**Pseudo-3D Image Augmentation App** は、あらゆる対象物（生物、工業製品、自動車、電子部品、動物、人物、各種オブジェクト等）の単一 2D 写真から、**3D 立体空間における被写体の擬似幾何変形（Pseudo-3D Deformation）・3 軸全方向回転（Yaw / Pitch / Roll）を再現し、多アングルの教示データセットを効率的に生成するための汎用アノテーション＆データ拡張アプリ**です。
 
 ---
 
 ## 🔬 背景 & データ不均衡の解消 (Background & Augmentation Benefits)
 
-物体検出（YOLOv8/v9/v10/v11 等）の学習において、**特定のアングル写真（正面等）に偏ったデータセットでは、撮影角度が変わった際の認識率が著しく低下する課題**が発生します。
+物体検出（YOLOv8/v9/v10/v11/26 等）の学習において、**特定のアングル写真（正面等）に偏ったデータセットでは、撮影角度が変わった際の認識率が著しく低下する課題**が発生します。
 
-本アプリは、追加の物理撮影を行うことなく、1枚の単一アングル写真から高精度なマルチアングル教示データを数千枚規模で全自動増幅・拡張し、AI モデルの汎化性能（Generalization Performance）と検出精度を劇的に向上させます。
+本アプリは、追加の物理撮影を行うことなく、1枚の単一アングル写真から高精度なマルチアングル教示データを増幅・拡張し、AI モデルの汎化性能（Generalization Performance）と検出精度を劇的に向上させます。
 
 ---
 
@@ -37,8 +37,8 @@
 * アプリのサイドバーから **`YOLO Class ID` (数値: `0`, `1`, `2`, ...)** および **`Class Name` (名前: `car`, `jellyfish`, `component`, etc.)** を自由に手動指定・変更可能。
 * ユーザーが独自の画像や異なるカテゴリの物体を読み込ませた際にも、即座に指定したラベル情報がアノテーションデータに反映されます。
 
-### 2. 📄 YOLO 標準 `data.yaml` の全自動生成 & ZIP 一括出力
-* 教示データセット ZIP を出力する際、画像 (`/images/`) やラベル (`/labels/`) だけでなく、**YOLO 学習に必要な標準定義ファイル `data.yaml` を完全自動構築・同封出力**します。
+### 2. 📄 YOLO 標準 `data.yaml` の生成 & ZIP 一括出力
+* 教示データセット ZIP を出力する際、画像 (`/images/`) やラベル (`/labels/`) だけでなく、**YOLO 学習に必要な標準定義ファイル `data.yaml` を構築・同封出力**します。
 
 ```yaml
 # Pseudo-3D Image Augmentation App Generated YOLO Dataset Config
@@ -49,7 +49,7 @@ val: images
 names:
   0: "jellyfish"
 ```
-* 解凍するだけで、Ultralytics YOLO (v8 / v9 / v10 / v11 等) の学習パイプラインへそのまま投入可能です！
+* 解凍するだけで、Ultralytics YOLO (v8 / v9 / v10 / v11 / 26 等) の学習パイプラインへそのまま投入可能です！
 
 ### 3. 🖼️ RGBA 透明被写体 ＋ CV2 Inpaint 補元背景の 2 レイヤー合成
 * OpenCV の `cv2.inpaint` (Telea) で修復した背景と、4 チャンネル RGBA 透明被写体を分離し、Three.js 上で 2 レイヤー合成。
@@ -87,10 +87,31 @@ names:
 
 ---
 
+## 🛠️ スタンドアローン構成 & ディレクトリ構成 (Directory Structure)
+
+本アプリは外部サーバーやインターネット接続を必要とせず、主要ブラウザ（Chrome / Safari / Edge / Firefox）でそのまま動作する完全スタンドアローン設計です。
+
+### ディレクトリ構成
+```text
+Github/
+├── index.html                             # トップアクセス用 (GitHub Pages ルート)
+├── index_ja.html                          # 🇯🇵 日本語版 Web アプリ (公開ページ)
+├── index_en.html                          # 🇺🇸 英語版 Web アプリ (公開ページ)
+├── pseudo_3d_image_augmentation_app_ja.html # 🇯🇵 日本語版 スタンドアローン HTML
+├── pseudo_3d_image_augmentation_app_en.html # 🇺🇸 英語版 スタンドアローン HTML
+├── build_3d_tool.py                       # Python 自動データセット ビルドスクリプト
+├── README.md                              # GitHub トップ用 ドキュメント
+├── README_JA.md                           # 🇯🇵 日本語 ドキュメント
+├── README_EN.md                           # 🇺🇸 英語 ドキュメント
+└── Screenshot.png                         # アプリ画面スクリーンショット
+```
+
+---
+
 ## 🚀 使い方 (Quick Start Guide)
 
 1. **アプリの起動**:
-   `pseudo_3d_image_augmentation_app.html` をブラウザで開きます。
+   [`index_ja.html`](https://keinagaokaeng.github.io/Pseudo-3D-Image-Augmentation-App/index_ja.html) （または英語版 [`index_en.html`](https://keinagaokaeng.github.io/Pseudo-3D-Image-Augmentation-App/index_en.html)）をブラウザで開きます。
 2. **クラス情報および画像の読み込み**:
    「🏷️ YOLO アノテーション設定」で Class ID と Class Name を入力し、「📥 好きな画像をドラッグ＆ドロップ」エリアに自分の画像を読み込ませます。
 3. **立体化とデータ生成**:
